@@ -63,10 +63,19 @@ async def get_shedules(callback: types.CallbackQuery, state: FSMContext):
                 arrival_time = shedule["arrival"]
 
                 duration = shedule["duration"] // 60
+                price = None
+                if shedule["tickets_info"]:
+
+                    price = shedule["tickets_info"]["places"][0]["price"]["whole"]
 
                 text += (f"{title.split("—", maxsplit=1)[0]} - {choose_station}\n"
                          f"{datetime.fromisoformat(departure_time).strftime('%H:%M')} - {datetime.fromisoformat(arrival_time).strftime('%H:%M')}\n"
-                         f"Время в пути: {int(duration)} минут.\n\n")
+                         f"Время в пути: {int(duration)} минут.")
+
+                if price:
+                    text += f" Цена: {price} RUB\n\n"
+                else:
+                    text += "\n\n"
 
         await callback.message.answer(
             text=text
