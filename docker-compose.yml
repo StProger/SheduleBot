@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+
+  bot:
+    container_name: "poizon_shop_app"
+    build: .
+    env_file:
+      - ./.env
+
+    command: sh -c "python3 main.py"
